@@ -3,10 +3,11 @@ function solve() {
    
 
    for(let i = 0; i < cards.length; i++){
-      cards[i].addEventListener('click', () => selectCard(cards[i]));
+      cards[i].addEventListener('click', selectCard);
    }
 
-   function selectCard(card){
+   function selectCard(event){
+      let card = event.target;
       let playerOneValue = document.querySelector('#result span');
       let playerTwoValue = document.querySelector('#result span:last-child');
       let cardValue = Number(card.name);

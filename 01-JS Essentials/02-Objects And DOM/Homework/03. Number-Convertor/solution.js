@@ -2,19 +2,21 @@ function solve() {
     initializeOptions();
     
     let button = document.getElementsByTagName('button')[0];
-    button.addEventListener('click',
-        () => {
-            let input = document.getElementById('input');
-            let convertOption = document.getElementById('selectMenuTo');
-            let result = 0;
-            if(input.value != '' && convertOption.value === 'binary'){
-                result = decToBinConvert(Number(input.value));
-            }else if(input.value != '' && convertOption.value === 'hexadecimal'){
-                result = decToHexConvert(Number(input.value));
-            }
+    button.addEventListener('click', calculate);
 
-            document.getElementById('result').value = result;
-    });
+    function calculate(){
+        let input = document.getElementById('input');
+        let convertOption = document.getElementById('selectMenuTo');
+        let result = 0;
+        if(input.value != '' && convertOption.value === 'binary'){
+            result = decToBinConvert(Number(input.value));
+        }else if(input.value != '' && convertOption.value === 'hexadecimal'){
+            result = decToHexConvert(Number(input.value));
+        }
+
+        document.getElementById('result').value = result;
+    }
+    
     function initializeOptions(){
         let selectMenuTo = document.getElementById('selectMenuTo');
         let binaryOption = selectMenuTo.querySelector('option');
