@@ -44,6 +44,8 @@
         })
         .catch(err => console.log(err));
 
+        displayStudent(student);
+        
         idInput.value = '';
         firstNameInput.value = '';
         lastNameInput.value = '';

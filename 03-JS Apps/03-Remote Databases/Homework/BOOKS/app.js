@@ -52,7 +52,7 @@
         let editBtn = document.createElement('button');
         buttonsWrapper.appendChild(editBtn);
         editBtn.textContent = 'Edit';
-        editBtn.addEventListener('click', () => editBook(book._id));
+        editBtn.addEventListener('click', () => editBook(book._id, tableRow));
 
         let deleteBtn = document.createElement('button');
         buttonsWrapper.appendChild(deleteBtn);
@@ -60,10 +60,14 @@
         deleteBtn.addEventListener('click', () => deleteBook(event.target.parentElement.parentElement, book._id));
     }
 
-    function editBook(bookId){
+    function editBook(bookId, tableRow){
+        if(titleInput.value === '' || authorInput.value === '' || isbn.value === ''){
+            return;
+        }
+
         const url = `https://baas.kinvey.com/appdata/kid_rJ5mfI3WH/books/${bookId}`;
         
-        let body = {
+        let book = {
             title: titleInput.value,
             author: authorInput.value,
             isbn: isbnInput.value
@@ -71,7 +75,7 @@
 
         clearForm();
 
-        body = JSON.stringify(body);
+        body = JSON.stringify(book);
     
         fetch(url, {
             method: 'PUT',
@@ -80,7 +84,9 @@
         })
         .catch(err => console.log(err));
 
-        
+        tableRow.querySelector('td').textContent = book.title;
+        tableRow.querySelector('td:nth-child(2)').textContent = book.author;
+        tableRow.querySelector('td:nth-child(3)').textContent = book.isbn;
     }
 
     function deleteBook(bookContainer, bookId){
@@ -95,7 +101,7 @@
         booksContainer.removeChild(bookContainer);
     }
 
-    async function addBook(){
+    function addBook(){
         const url = 'https://baas.kinvey.com/appdata/kid_rJ5mfI3WH/books';
         let book = {
             title: titleInput.value,
@@ -105,14 +111,14 @@
 
         let body = JSON.stringify(book);
         
-        await fetch(url, {
+        fetch(url, {
             method: 'POST',
             headers,
             body
         })
         .catch(err => console.log(err));
 
-        clearForm();
+        displayBook(book);
     }
 
     function displayBookInHTMLForm(bookContainer){
