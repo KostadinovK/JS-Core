@@ -54,11 +54,20 @@ let teamsService = (() => {
 
     function joinTeam(teamId) {
         let userData = {
-            username: sessionStorage.getItem('username'),
+            username: JSON.parse(storage.getData('userInfo')).username,
             teamId: teamId
         };
 
-        return requester.update('user', sessionStorage.getItem('userId'), 'kinvey', userData);
+        const url = `https://baas.kinvey.com/appdata/${storage.appKey}/teams/${teamId.slice(1)}`;
+
+        let headers = {
+            headers: {
+                Authorization: `Kinvey ${storage.getData('authToken')}`
+            },
+            body: JSON.stringify(userData)
+        };
+
+        return requester.patch(url, headers);
     }
 
     function leaveTeam() {

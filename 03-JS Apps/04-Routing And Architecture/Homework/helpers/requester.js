@@ -15,6 +15,11 @@ const requester = function () {
         return makeRequest(url, headers);
     };
 
+    const patch = function(url, headers){
+        headers.method = "PATCH";
+        return makeRequest(url, header);
+    }
+
     const del = function (url, headers) {
         headers.method = "DELETE";
         return makeRequest(url, headers);
@@ -37,5 +42,6 @@ const requester = function () {
         post,
         del,
         put,
+        patch
     }
 }();

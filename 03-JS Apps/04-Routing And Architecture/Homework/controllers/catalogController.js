@@ -3,7 +3,6 @@ const catalogController = function(){
         context.loggedIn = storage.getData("userInfo") !== null;
         context.username = JSON.parse(storage.getData('userInfo')).username;
         context.hasNoTeam = JSON.parse(storage.getData('teamId')) === 'undefined';
-        console.log(context.hasNoTeam);
 
         teamsService.loadTeams()
         .then(response => response.json())
@@ -27,7 +26,6 @@ const catalogController = function(){
         teamsService.loadTeamDetails(context.params.id)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 context.teamId = data._id;
                 context.isAuthor = storage.getData('userId') === data._acl.creator;
                 context.isOnTeam = storage.getData('teamId') === data._id;
@@ -67,10 +65,19 @@ const catalogController = function(){
         this.redirect('#/catalog');
     }
 
+    const joinTeam = function (context) {
+        console.log(context.params);
+        teamsService.joinTeam(context.params.id)
+        .then(() => {
+            context.redirect(`#/catalog/` + context.params.id)
+        });
+    }
+
     return {
         getCatalog,
         getTeamDetails,
         getCreateTeamForm,
-        postCreateTeam
+        postCreateTeam,
+        joinTeam
     };
 }();
