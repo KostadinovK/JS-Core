@@ -34,12 +34,21 @@ let teamsService = (() => {
     }
 
     function createTeam(name, comment) {
+        const url = `/appdata/${storage.appKey}/teams`;
+        
         let teamData = {
             name: name,
             comment: comment
         };
 
-        return requester.post('appdata', 'teams', 'kinvey', teamData);
+        let headers = {
+            headers: {
+                Authorization: `Kinvey ${storage.getData('authToken')}`
+            },
+            body: JSON.stringify(teamData)
+        };
+
+        return requester.post(url, headers);
     }
 
 

@@ -47,8 +47,30 @@ const catalogController = function(){
             });
     }
 
+    const getCreateTeamForm = function(context){
+        context.loggedIn = storage.getData("userInfo") !== null;
+        context.username = JSON.parse(storage.getData('userInfo')).username;
+        
+        context.loadPartials({
+            header: '../views/common/header.hbs',
+            footer: '../views/common/footer.hbs',
+            createForm: '../views/create/createForm.hbs'
+        })
+        .then(function(){
+            this.partial('../views/create/createPage.hbs');
+        });
+    }
+
+    const postCreateTeam = function(context){
+        teamsService.createTeam(context.params.name, context.params.comment);
+
+        this.redirect('#/catalog');
+    }
+
     return {
         getCatalog,
-        getTeamDetails
+        getTeamDetails,
+        getCreateTeamForm,
+        postCreateTeam
     };
 }();

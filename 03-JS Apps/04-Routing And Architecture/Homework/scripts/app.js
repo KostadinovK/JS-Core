@@ -9,6 +9,8 @@ const app = Sammy("#main", function () {
 
     this.get('#/catalog', catalogController.getCatalog);
     this.get('#/catalog/:id', catalogController.getTeamDetails);
+    this.get('#/create', catalogController.getCreateTeamForm);
+    this.post('#/create', catalogController.postCreateTeam);
     // User
     this.get('#/register', userController.getRegister);
     this.get('#/login', userController.getLogin);
