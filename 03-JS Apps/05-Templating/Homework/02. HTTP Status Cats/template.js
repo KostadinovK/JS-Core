@@ -1,5 +1,5 @@
 (() => {
-    let catsDiv = document.getElementById('allCats');
+    let catsList = document.querySelector('#allCats ul');
 
     renderCatTemplate();
 
@@ -7,16 +7,16 @@
         let templateFunc = await getTemplateFunc('card');
 
         for (const cat of window.cats) {
-            catsDiv.innerHTML += templateFunc(cat);
+            catsList.innerHTML += templateFunc(cat);
         }
 
-        const infoBtns = catsDiv.querySelectorAll('.btn');
+        const infoBtns = catsList.querySelectorAll('.showBtn');
         
         Array.from(infoBtns)
         .forEach((btn) => {
             btn.addEventListener('click', (event) => {
                 let catDiv = event.target.parentElement;
-                let detailsDiv = catDiv.querySelector('.card-block div');
+                let detailsDiv = catDiv.querySelector('.status');
 
                 if(detailsDiv.style.display === 'block'){
                     event.target.textContent = 'Show status code';
